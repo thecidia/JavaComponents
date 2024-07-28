@@ -1,5 +1,6 @@
 package com.java.components.lang;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class Clazz<T> {
@@ -7,10 +8,12 @@ public class Clazz<T> {
 
 	public Clazz() {}
 
+	@SuppressWarnings("static-access")
 	public Clazz(Class<T> clazz) {
 		this.clazz = clazz;
 	}
 	
+	@Override
 	public String toString() {
 		String kind = isInterface() ? "interface " : (isPrimitive() ? "" : "class ");
 		return kind.concat(this.getName());
@@ -81,7 +84,11 @@ public class Clazz<T> {
 			Method privateMethod = clazz.getDeclaredMethod("forName");
 			privateMethod.setAccessible(true);
 			return (Class<?>) privateMethod.invoke(null, name, initialize, loader, parent);
-		} catch(Exception e) {
+		} catch (NoSuchMethodException e) {
+			return null;
+		} catch (IllegalAccessException e) {
+			return null;
+		} catch (InvocationTargetException e) {
 			return null;
 		}
 	}

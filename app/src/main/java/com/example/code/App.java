@@ -3,15 +3,8 @@
  */
 package com.example.code;
 
-import com.java.components.lang.StringBuilder;
-
-import static com.java.components.Prints.*;
-
-import java.util.Arrays;
-
 public class App {
 
-	@SuppressWarnings({ "static-access" })
 	public static void main(String[] args) {
 		
 	}
