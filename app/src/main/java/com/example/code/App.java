@@ -1,7 +1,12 @@
 package com.example.code;
 
+import static com.java.components.Prints.*;
+
+import com.java.components.lang.StringBuilder;
+
 public class App {
 	public static void main(String[] args) {
-		// XXX: this 'Method' is use for a test a code (Java-Components);
+		StringBuilder sb = new StringBuilder("Hello, World in Java-Components!");
+		println(sb.split(" ", 3));
 	}
 }

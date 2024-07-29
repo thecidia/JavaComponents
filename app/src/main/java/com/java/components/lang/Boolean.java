@@ -112,8 +112,6 @@ public class Boolean {
 			return "true";
 		} else if (value.getBoolean() == false) {
 			return "false";
-		} else if (value == null) {
-			return "null";
 		}
 		return null;
 	}

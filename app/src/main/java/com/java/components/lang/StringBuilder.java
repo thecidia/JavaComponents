@@ -10,13 +10,13 @@ import java.util.regex.Pattern;
 /**
  * <h1>Documentación</h1>
  * La clase {@code StringBuilder} mejora la clase {@link String} para proporcionar una mayor flexibilidad
- * en la manipulación de caracteres dentro de <strong>Java</strong>. A diferencia de {@link String}, 
- * {@code StringBuilder} es <strong>mutable</strong>, lo que permite modificar su contenido sin crear 
+ * en la manipulación de caracteres dentro de <strong>Java</strong>. A diferencia de {@link String},
+ * {@code StringBuilder} es <strong>mutable</strong>, lo que permite modificar su contenido sin crear
  * nuevos objetos.
  *
  * <h2>¿Cómo usarlo?</h2>
- * Hay varias maneras de utilizar {@code StringBuilder}. Una opción es usar una instancia guardada en 
- * una variable que soporte la clase {@code StringBuilder}. Otra opción es utilizarla directamente 
+ * Hay varias maneras de utilizar {@code StringBuilder}. Una opción es usar una instancia guardada en
+ * una variable que soporte la clase {@code StringBuilder}. Otra opción es utilizarla directamente
  * con el operador <strong>new</strong>.
  *
  * <h3>Manera 1: Uso de la variable {@code StringBuilder}</h3>
@@ -949,8 +949,8 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder join(int length, String begin, String prefix, String delimiter, String suffix,
-			String end, Object... objects) {
+	public StringBuilder join(String begin, String prefix, String delimiter, String suffix,
+			String end, int length, Object[] objects) {
 		StringBuilder sb = new StringBuilder(begin);
 		for (int i = 0; i < length; i++) {
 			sb = sb.append(prefix).append(objects[i]).append(suffix).append(delimiter);
@@ -961,30 +961,56 @@ public class StringBuilder implements AbstractStringBuilder {
 		return sb;
 	}
 
-	//@Override
-	public String[] split(String delimiter, int limit) {
+	@Override
+	public StringBuilder join(String begin, String prefix, String delimiter, String suffix,
+			String end, Object[] objects) {
+		return join(begin, prefix, delimiter, suffix, end, objects.length, objects);
+	}
+
+	@Override
+	public StringBuilder join(String prefix, String delimiter, String suffix, int length, Object[] objects) {
+		return join("", prefix, delimiter, suffix, "", length, objects);
+	}
+
+	@Override
+	public StringBuilder join(String prefix, String delimiter, String suffix, Object[] objects) {
+		return join("", prefix, delimiter, suffix, "", objects.length, objects);
+	}
+
+	@Override
+	public StringBuilder join(String delimiter, int length, Object[] objects) {
+		return join("", "", delimiter, "", "", length, objects);
+	}
+
+	@Override
+	public StringBuilder join(String delimiter, Object[] objects) {
+		return join("", "", delimiter, "", "", objects.length, objects);
+	}
+
+	@Override
+	public StringBuilder[] split(String delimiter, int limit) {
         if (character == null || delimiter == null || limit < 1) {
             throw new IllegalArgumentException("Invalid input");
         }
-		String str = new String(character);
+		StringBuilder sb = new StringBuilder(character);
 
-        String[] result = new String[limit];
+		StringBuilder[] result = new StringBuilder[limit];
         int count = 0;
         int start = 0;
         int end;
 
-        while ((end = str.indexOf(delimiter, start)) != -1) {
+        while ((end = sb.indexOf(delimiter, start)) != -1) {
             if (count == limit - 1) {
                 break;
             }
-            result[count++] = str.substring(start, end);
+            result[count++] = sb.substring(start, end);
             start = end + delimiter.length();
         }
 
-        result[count] = str.substring(start);
+        result[count] = sb.substring(start);
 
         if (count < limit - 1) {
-            String[] trimmedResult = new String[count + 1];
+            StringBuilder[] trimmedResult = new StringBuilder[count + 1];
             java.lang.System.arraycopy(result, 0, trimmedResult, 0, count + 1);
             return trimmedResult;
         }
@@ -992,7 +1018,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	// @Override
-	public String[] split(char delimiter) {
+	public StringBuilder[] split(char delimiter) {
 		return split(Character.toString(delimiter), 0);
 	}
 

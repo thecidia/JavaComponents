@@ -211,20 +211,20 @@ public interface AbstractStringBuilder {
 	public AbstractStringBuilder trimEnd();
 	public AbstractStringBuilder trim();
 
-	public AbstractStringBuilder join(int length, String begin, String prefix, String delimiter, String suffix, String end, Object... objects);
-	// public AbstractStringBuilder join(String begin, String prefix, String delimiter, String suffix, String end, Object... objects);
-	// public AbstractStringBuilder join(int length, String prefix, String delimiter, String suffix, Object... objects);
-	// public AbstractStringBuilder join(String prefix, String delimiter, String suffix, Object... objects);
-	// public AbstractStringBuilder join(int length, String delimiter, Object... objects);
-	// public AbstractStringBuilder join(String delimiter, Object... objects);
+	public AbstractStringBuilder join(String begin, String prefix, String delimiter, String suffix, String end, int length, Object[] objects);
+	public AbstractStringBuilder join(String begin, String prefix, String delimiter, String suffix, String end, Object[] objects);
+	public AbstractStringBuilder join(String prefix, String delimiter, String suffix, int length, Object[] objects);
+	public AbstractStringBuilder join(String prefix, String delimiter, String suffix, Object[] objects);
+	public AbstractStringBuilder join(String delimiter, int length, Object[] objects);
+	public AbstractStringBuilder join(String delimiter, Object[] objects);
 
 	// public AbstractStringBuilder[] split(String delimiter, boolean returnDelimiters, int limit);
 	// public AbstractStringBuilder[] split(char delimiter, boolean returnDelimiters, int limit);
 	// public AbstractStringBuilder[] split(String delimiter, boolean returnDelimiters);
 	// public AbstractStringBuilder[] split(char delimiter, boolean returnDelimiters);
-	// public AbstractStringBuilder[] split(String delimiter, int limit);
-	//public AbstractStringBuilder[] split(char delimiter, int limit);
-	//public AbstractStringBuilder[] split(String delimiter);
+	public AbstractStringBuilder[] split(String delimiter, int limit);
+	// public AbstractStringBuilder[] split(char delimiter, int limit);
+	// public AbstractStringBuilder[] split(String delimiter);
 	// public AbstractStringBuilder[] split(char delimiter);
 	public AbstractStringBuilder[] split(int index, int limit);
 	public AbstractStringBuilder[] split(int index);
