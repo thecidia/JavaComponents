@@ -1,7 +1,7 @@
 package com.java.components.lang;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 public interface AbstractStringBuilder {
 
@@ -101,22 +101,23 @@ public interface AbstractStringBuilder {
 	public AbstractStringBuilder reverse(int startOrEnd, boolean isStart);
 	public AbstractStringBuilder reverse(AbstractStringBuilder asb);
 	public AbstractStringBuilder reverse(String s);
-	// public AbstractStirngBuilder reverse(Number n);
-	// public AbstractStirngBuilder reverse(Integer i);
-	// public AbstractStirngBuilder reverse(Byte b);
-	// public AbstractStirngBuilder reverse(byte b);
-	// public AbstractStirngBuilder reverse(Short s);
-	// public AbstractStirngBuilder reverse(short s);
-	// public AbstractStirngBuilder reverse(int i);
-	// public AbstractStringBuilder reverse(Long l);
-	// public AbstractStringBuilder reverse(long l);
-	// public AbstractStringBuilder reverse(Float f);
-	// public AbstractStringBuilder reverse(float f);
-	// public AbstractStringBuilder reverse(Double d);
-	// public AbstractStringBuilder reverse(double d);
-	// public AbstractStringBuilder reverse(Character c);
-	// public AbstractStringBuilder reverse(char c);
-	// public AbstractStringBuilder reverse(Boolean b);
+	public AbstractStringBuilder reverse(Number n);
+	public AbstractStringBuilder reverse(Byte b);
+	public AbstractStringBuilder reverse(byte b);
+	public AbstractStringBuilder reverse(Short s);
+	public AbstractStringBuilder reverse(short s);
+	public AbstractStringBuilder reverse(Integer i);
+	public AbstractStringBuilder reverse(int i);
+	public AbstractStringBuilder reverse(Long l);
+	public AbstractStringBuilder reverse(long l);
+	public AbstractStringBuilder reverse(Float f);
+	public AbstractStringBuilder reverse(float f);
+	public AbstractStringBuilder reverse(Double d);
+	public AbstractStringBuilder reverse(double d);
+	public AbstractStringBuilder reverse(Character c);
+	public AbstractStringBuilder reverse(char c);
+	public AbstractStringBuilder reverse(Boolean b);
+	public AbstractStringBuilder reverse(boolean b);
 
 	public AbstractStringBuilder padStart(int length, char padChar);
 	public AbstractStringBuilder padEnd(int length, char padChar);

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.java.components.Prints;
+import static com.java.components.Prints.*;
 
 /**
  * <h1>Documentación</h1>
@@ -53,8 +53,6 @@ import com.java.components.Prints;
  * @since JDK 21 (2024-07-15)
  */
 public class StringBuilder implements AbstractStringBuilder {
-	private onTextChangedListener mOnTextChanged;
-	
 	private char[] character;
 	private Integer count;
 	private Integer offset;
@@ -168,13 +166,6 @@ public class StringBuilder implements AbstractStringBuilder {
 		}
 	}
 
-	public interface onTextChangedListener {
-		public void onTextChanged(StringBuilder text, int start, int end);
-		public void onBerofeTextChanged(StringBuilder text, int start, int end);
-		public void onAfterTextChanged(StringBuilder text, int start, int end);
-		public StringBuilder onAddTextChanged(StringBuilder text, int start, int end);
-	}
-	
 	@Override
 	public StringBuilder setCharAt(int index, char character) {
 		this.character[index + offset] = character;
@@ -216,24 +207,6 @@ public class StringBuilder implements AbstractStringBuilder {
 
 	@Override
 	public StringBuilder replace(int start, int end, String replacement) {
-		/*
-		aqui estoy teniendo dl problem de que no se copea bien los array, siempre se borrar o agrega un caracter.
-		int len = replacement.length();
-		int newCount = count + len - (end - start);
-		ensureCapacity(newCount);
-
-		java.lang.System.arraycopy(character, end, character, start + len, count - end);
-		java.lang.System.arraycopy(replacement.toCharArray(), 0, character, start, len);
-
-		count = newCount;
-
-		return this;
-		String str = "";
-		for (int i = 0; i < character.length; i++) {
-			str = str + character[i];
-		}
-		java.lang.StringBuilder sb = new java.lang.StringBuilder(str); // usando clase auxiliar
-		character = sb.replace(start, end, replacement).toString().toCharArray();*/
 		StringBuilder sb = new StringBuilder(character);
 		character = sb.substring(0, start).append(replacement).append(sb.substring(end)).toString().toCharArray();
 		return this;
@@ -598,6 +571,108 @@ public class StringBuilder implements AbstractStringBuilder {
 	@Override
 	public StringBuilder reverse(String s) {
 		StringBuilder sb = new StringBuilder(s);
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(Number n) {
+		StringBuilder sb = new StringBuilder(n.toString());
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(Byte b) {
+		StringBuilder sb = new StringBuilder(b.toString());
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(byte b) {
+		StringBuilder sb = new StringBuilder(Byte.toString(b));
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(Short s) {
+		StringBuilder sb = new StringBuilder(s.toString());
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(short s) {
+		StringBuilder sb = new StringBuilder(Short.toString(s));
+		return sb.reverse();
+	}
+
+	@Override
+    public StringBuilder reverse(Integer i) {
+       StringBuilder sb = new StringBuilder(i.toString());
+	   return sb.reverse();
+    }
+
+	@Override
+    public StringBuilder reverse(int i) {
+	   StringBuilder sb = new StringBuilder(Integer.toString(i));
+	   return sb.reverse();
+    }
+
+	@Override
+	public StringBuilder reverse(Long l) {
+		StringBuilder sb = new StringBuilder(l.toString());
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(long l) {
+		StringBuilder sb = new StringBuilder(Long.toString(l));
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(Float f) {
+		StringBuilder sb = new StringBuilder(f.toString());
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(float f) {
+		StringBuilder sb = new StringBuilder(Float.toString(f));
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(Double d) {
+		StringBuilder sb = new StringBuilder(d.toString());
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(double d) {
+		StringBuilder sb = new StringBuilder(Double.toString(d));
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(Character c) {
+		StringBuilder sb = new StringBuilder(c.toString());
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(char c) {
+		StringBuilder sb = new StringBuilder(Character.toString(c));
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(Boolean b) {
+		StringBuilder sb = new StringBuilder(b.toString());
+		return sb.reverse();
+	}
+
+	@Override
+	public StringBuilder reverse(boolean b) {
+		StringBuilder sb = new StringBuilder(Boolean.toString(b));
 		return sb.reverse();
 	}
 

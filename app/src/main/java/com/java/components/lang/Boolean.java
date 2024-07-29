@@ -107,5 +107,25 @@ public class Boolean {
 		return false;
 	}
 
+	public static String toString(Boolean value) {
+		if (value.getBoolean() == true) {
+			return "true";
+		} else if (value.getBoolean() == false) {
+			return "false";
+		} else if (value == null) {
+			return "null";
+		}
+		return null;
+	}
+
+	public static String toString(boolean value) {
+		if (value == true) {
+			return "true";
+		} else if (value == false) {
+			return "false";
+		}
+		return null;
+	}
+
 	public boolean getBoolean() { return this.value; }
 }

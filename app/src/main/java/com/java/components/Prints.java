@@ -2,20 +2,13 @@ package com.java.components;
 
 @SuppressWarnings("static-access")
 public class Prints {
-	public static class Returns {
-		public static String printr(String string) {
-			Prints.print(string);
-			return string;
-		}
-		public static boolean printr(boolean b) {
-			Prints.print(b); return b;
-		}
-
-	}
-	
 	public static Prints print(String string) {
 		System.out.print(string);
 		return new Prints();
+	}
+	public static String printr(String string) {
+		print(string);
+		return string;
 	}
 	public static Prints print(Object obj) { return print(obj.toString()); }
 	public static Prints print(Boolean bool) { return print(bool.toString()); }
