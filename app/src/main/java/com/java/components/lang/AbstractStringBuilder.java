@@ -250,7 +250,7 @@ public interface AbstractStringBuilder {
 	public boolean endsWith(String s);
 	public boolean endsWithIgnoreCase(String s);
 
-	public boolean equals(Object obj);
+	@Override public boolean equals(Object obj);
 	public boolean equalsIgnoreCase(Object obj);
 	public boolean contains(String s);
 	public boolean containsIgnoreCase(String s);

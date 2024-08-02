@@ -4,7 +4,7 @@ public class Null {
     public static final Null NULL = null;
 
     public Null() {
-
+        
     }
 
     public boolean isNull() {
@@ -13,5 +13,10 @@ public class Null {
 
     public Null getNull() {
         return NULL;
+    }
+
+    @Override
+    public String toString() {
+        return null;
     }
 }
