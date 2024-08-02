@@ -54,9 +54,17 @@ public class StringBuilder implements AbstractStringBuilder {
 	private char[] character;
 	private Integer count;
 	private Integer offset;
+	private Integer capacity = 16;
 
 	public StringBuilder() {
-		this.character = new char[0];
+		this.character = new char[this.capacity];
+		this.count = 0;
+		this.offset = 0;
+	}
+
+	public StringBuilder(Integer capacity) {
+		this.capacity = capacity;
+		this.character = new char[capacity];
 		this.count = 0;
 		this.offset = 0;
 	}

@@ -80,23 +80,6 @@ public class Prints {
 		println();
 		return new Prints();
 	}
-	public static Prints printsln(Object obj) { return printsln(obj.toString()); }
-	public static Prints printsln(Boolean bool) { return printsln(bool.toString()); }
-	public static Prints printsln(boolean b) { return printsln(((Object) b).toString()); }
-	public static Prints printsln(Character character) { return printsln(character.toString()); }
-	public static Prints printsln(char c) { return printsln(((Object) c).toString()); }
-	public static Prints printsln(Short short1) { return printsln(short1.toString()); }
-	public static Prints printsln(short srt) { return printsln(((Object) srt).toString()); }
-	public static Prints printsln(Byte byte1) { return printsln(byte1.toString()); }
-	public static Prints printsln(byte bte) { return printsln(((Object) bte).toString()); }
-	public static Prints printsln(Integer integer) { return printsln(integer.toString()); }
-	public static Prints printsln(int i) { return printsln(((Object) i).toString()); }
-	public static Prints printsln(Long long1) { return printsln(long1.toString()); }
-	public static Prints printsln(long l) { return printsln(((Object) l).toString()); }
-	public static Prints printsln(Float float1) { return printsln(float1.toString()); }
-	public static Prints printsln(float f) { return printsln(((Object) f).toString()); }
-	public static Prints printsln(Double double1) { return printsln(double1.toString()); }
-	public static Prints printsln(double d) { return printsln(((Object) d).toString()); }
 
 	public static Prints printlns(String... strs) {
 		for (String str : strs) {
@@ -104,23 +87,6 @@ public class Prints {
 		}
 		return new Prints();
 	}
-	public static Prints printlns(Object obj) { return printlns(obj.toString()); }
-	public static Prints printlns(Boolean bool) { return printlns(bool.toString()); }
-	public static Prints printlns(boolean b) { return printlns(((Object) b).toString()); }
-	public static Prints printlns(Character character) { return printlns(character.toString()); }
-	public static Prints printlns(char c) { return printlns(((Object) c).toString()); }
-	public static Prints printlns(Short short1) { return printlns(short1.toString()); }
-	public static Prints printlns(short srt) { return printlns(((Object) srt).toString()); }
-	public static Prints printlns(Byte byte1) { return printlns(byte1.toString()); }
-	public static Prints printlns(byte bte) { return printlns(((Object) bte).toString()); }
-	public static Prints printlns(Integer integer) { return printlns(integer.toString()); }
-	public static Prints printlns(int i) { return printlns(((Object) i).toString()); }
-	public static Prints printlns(Long long1) { return printlns(long1.toString()); }
-	public static Prints printlns(long l) { return printlns(((Object) l).toString()); }
-	public static Prints printlns(Float float1) { return printlns(float1.toString()); }
-	public static Prints printlns(float f) { return printlns(((Object) f).toString()); }
-	public static Prints printlns(Double double1) { return printlns(double1.toString()); }
-	public static Prints printlns(double d) { return printlns(((Object) d).toString()); }
 
 	public static String printr(String string) {
 		print(string);
