@@ -1,4 +1,4 @@
-package com.java.components.lang;
+package com.java.components.lang.exception;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;

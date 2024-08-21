@@ -1,12 +1,11 @@
 package com.example.code;
 
-import static com.java.components.Prints.*;
-
-import com.java.components.lang.Null;
-import com.java.components.lang.StringBuilder;
+import static com.java.components.Prints.println;
+import com.java.components.lang.Boolean;
 
 public class App {
-	public static void main(String[] args) {
-		println(new Null());
-	}
+    public static void main(String[] args) {
+        Boolean test = new Boolean(false);
+        println(test.equals(false, false, false));
+    }
 }

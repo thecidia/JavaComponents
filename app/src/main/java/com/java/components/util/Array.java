@@ -1,7 +1,7 @@
 package com.java.components.util;
 
 import com.java.components.lang.CompilerTaskException;
-import com.java.components.lang.StringBuilder;
+import com.java.components.lang.StringBuilders;
 
 import java.util.Arrays;
 
@@ -115,7 +115,7 @@ public class Array<T> {
 	}
 	
 	public String toString(String delimiter) {
-		StringBuilder sb = new StringBuilder();
+		StringBuilders sb = new StringBuilders();
 		int iMax = values.length - 1;
 		if (iMax < 0) { return "[]"; }
 		for (int i = 0; i < iMax; i++) {

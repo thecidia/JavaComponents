@@ -3,8 +3,8 @@ package com.java.components.lang;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import com.java.components.lang.exception.IndexOutOfBoundsException;
+import com.java.components.lang.exception.NullPointerException;
 
 public class System {
 
@@ -63,17 +63,8 @@ public class System {
         listCopy(src, 0, dest, 0, src.size());
     }
 
-	public static char[] StringArraytoCharArray(String[] strings, char[] chars) {
-		ArrayList<Character> list = new ArrayList<Character>();
-		for (int i = 0; i < strings.length; i++) {
-			for (int j = 0; j < strings[i].length(); j++) {
-				list.add(strings[i].charAt(j));
-			}
-		}
-		char[] innerChars = new char[list.size()];
-		for (int i = 0; i < list.size(); i++) {
-			innerChars[i] = list.get(i);
-		}
-		return chars = innerChars;
+	public static char[] toCharArray(String[] strings) {
+        String string = String.join("", strings);
+        return string.toCharArray();
 	}
 }

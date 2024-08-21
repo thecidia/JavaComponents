@@ -1,7 +1,8 @@
 package com.java.components.util;
 
-import com.java.components.lang.NullPointerException;
-import com.java.components.lang.*;
+import com.java.components.lang.CompilerTaskException;
+import com.java.components.lang.exception.EmptyPointerException;
+import com.java.components.lang.exception.NullPointerException;
 
 public class Union {
 	private Object value;

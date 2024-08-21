@@ -7,13 +7,15 @@ import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.java.components.lang.CompilerTaskException;
+
 public class StringTemplate { // StringTemplate Support
 	// ---------- CreateObj : Start ---------- \\
 	public static final String NAME = "StringTemplate";
 	private static final String TAG = NAME;
 	public static final String VERSION = "1.0.0";
 	private Map<Object, Object> replacements;
-	private StringTemplateDelimiter delimiter = new StringTemplateDelimiter("${", ":", "}");
+	private StringTemplateDelimiter delimiter = new StringTemplateDelimiter("${", ":", "};");
 	private String start = this.delimiter.getStartDelimiter();
 	private String condition = this.delimiter.getConditionDelimiter();
 	private String end = this.delimiter.getEndDelimiter();
@@ -101,11 +103,23 @@ public class StringTemplate { // StringTemplate Support
 	// ---------- set : Start ---------- \\
 	public StringTemplate set(String str, String obj) {
 		if (str == null) {
-			throw new NoSuchElementException("template not found!");
+			throw new CompilerTaskException("The template '" + str + "' it is not found or does not exist.", new Exception[] {
+				new NoSuchElementException(),
+				new IllegalArgumentException(),
+				new IllegalAccessException()
+			});
 		} else if (str.startsWith(".")) {
-			throw new IllegalArgumentException("Your 'Template' start with in '.'");
+			throw new CompilerTaskException("The template you want to find start with '.'", new Exception[] {
+				new IllegalArgumentException(),
+				new IllegalAccessException()
+			});
+			// throw new IllegalArgumentException("Your 'Template' start with in '.'");
 		} else if (str.endsWith(".")) {
-			throw new IllegalArgumentException("Your 'Template' end with in '.'");
+			throw new CompilerTaskException("The template you want to find end with '.'", new Exception[] {
+				new IllegalArgumentException(),
+				new IllegalAccessException()
+			});
+			// throw new IllegalArgumentException("Your 'Template' end with in '.'");
 		} else {
 			this.replacements.put(str, obj);
 			return this;

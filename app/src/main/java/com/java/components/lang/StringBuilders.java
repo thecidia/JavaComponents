@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.java.components.lang.exception.IndexOutOfBoundsException;
+import com.java.components.lang.exception.NullPointerException;
+
 /**
  * <h1>Documentación</h1>
  * La clase {@code StringBuilder} mejora la clase {@link String} para proporcionar una mayor flexibilidad
@@ -50,41 +53,42 @@ import java.util.regex.Pattern;
  * @version 1.0.0
  * @since JDK 21 (2024-07-15)
  */
-public class StringBuilder implements AbstractStringBuilder {
+@SuppressWarnings("redundant")
+public class StringBuilders implements AbstractStringBuilder {
 	private char[] character;
 	private Integer count;
 	private Integer offset;
 	private Integer capacity = 16;
 
-	public StringBuilder() {
+	public StringBuilders() {
 		this.character = new char[this.capacity];
 		this.count = 0;
 		this.offset = 0;
 	}
 
-	public StringBuilder(Integer capacity) {
+	public StringBuilders(Integer capacity) {
 		this.capacity = capacity;
 		this.character = new char[capacity];
 		this.count = 0;
 		this.offset = 0;
 	}
 
-	public StringBuilder(char ch) {
+	public StringBuilders(char ch) {
 		this.character = new char[1];
 		this.count = 1;
 		this.offset = 0;
 		character[0] = ch;
 	}
 
-	public StringBuilder(String str) {
+	public StringBuilders(String str) {
 		this(str, 0);
 	}
 
-	public StringBuilder(String str, int offset) {
+	public StringBuilders(String str, int offset) {
 		this(str, offset, str.length());
 	}
 
-	public StringBuilder(String str, int offset, int length) {
+	public StringBuilders(String str, int offset, int length) {
 		this.character = new char[length];
 		this.count = length;
 		this.offset = offset;
@@ -95,15 +99,15 @@ public class StringBuilder implements AbstractStringBuilder {
 		}
 	}
 
-	public StringBuilder(AbstractStringBuilder str) {
+	public StringBuilders(StringBuilders str) {
 		this(str, 0);
 	}
 
-	public StringBuilder(AbstractStringBuilder str, int offset) {
+	public StringBuilders(StringBuilders str, int offset) {
 		this(str, offset, str.length());
 	}
 
-	public StringBuilder(AbstractStringBuilder str, int offset, int length) {
+	public StringBuilders(StringBuilders str, int offset, int length) {
 		this.character = new char[length];
 		this.count = length;
 		this.offset = offset;
@@ -113,15 +117,15 @@ public class StringBuilder implements AbstractStringBuilder {
 		}
 	}
 
-	public StringBuilder(char values[]) {
+	public StringBuilders(char values[]) {
 		this(values, 0);
 	}
 
-	public StringBuilder(char values[], int offset) {
+	public StringBuilders(char values[], int offset) {
 		this(values, offset, values.length);
 	}
 
-	public StringBuilder(char values[], int offset, int length) {
+	public StringBuilders(char values[], int offset, int length) {
 		if (values == null) throw new NullPointerException();
 		if (offset < 0 || offset > values.length) throw new StringBuilderIndexOutOfBoundsException();
 		if (length < 0) throw new IndexOutOfBoundsException();
@@ -132,13 +136,13 @@ public class StringBuilder implements AbstractStringBuilder {
 		java.lang.System.arraycopy(values, offset, this.character, 0, length);
 	}
 
-	public StringBuilder(String[] strings) {
-		character = System.StringArraytoCharArray(strings, character);
+	public StringBuilders(String[] strings) {
+		this.character = System.toCharArray(strings);
 		this.count = character.length;
 	}
 
-	public StringBuilder(String[] strings, int offset) {
-		char[] newCharacter = System.StringArraytoCharArray(strings, character);
+	public StringBuilders(String[] strings, int offset) {
+		char[] newCharacter = System.toCharArray(strings);
 		this.character = new char[newCharacter.length];
 		for (int i = 0; i < newCharacter.length; i++) {
 			this.character[i] = newCharacter[i + offset];
@@ -147,8 +151,8 @@ public class StringBuilder implements AbstractStringBuilder {
 		this.count = newCharacter.length;
 	}
 
-	public StringBuilder(String[] strings, int offset, int length) {
-		char[] newCharacter = System.StringArraytoCharArray(strings, character);
+	public StringBuilders(String[] strings, int offset, int length) {
+		char[] newCharacter = System.toCharArray(strings);
 		this.character = new char[length];
 		for (int i = 0; i < length; i++) {
 			this.character[i] = newCharacter[i + offset];
@@ -157,23 +161,23 @@ public class StringBuilder implements AbstractStringBuilder {
 		this.count = length;
 	}
 
-	public void ensureCapacity(int minimumCapacity) {
+	protected void ensureCapacity(int minimumCapacity) {
 		int maxCapacity = character.length;
 	
 		if (minimumCapacity > maxCapacity) {
 			int newCapacity = (maxCapacity + 1) * 2;
 			if (minimumCapacity > newCapacity) {
-			newCapacity = minimumCapacity;
+				newCapacity = minimumCapacity;
 			}
 	
-			char newValue[] = new char[newCapacity];
+			char newValue[] = new char[newCapacity + capacity];
 			java.lang.System.arraycopy(character, 0, newValue, 0, count);
 			character = newValue;
 		}
 	}
 
 	@Override
-	public StringBuilder setCharAt(int index, char character) {
+	public StringBuilders setCharAt(int index, char character) {
 		this.character[index + offset] = character;
 		return this;
 	}
@@ -184,7 +188,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder setCharAtCodePoint(int index, int codePoint) {
+	public StringBuilders setCharAtCodePoint(int index, int codePoint) {
 		character[index + offset] = (char) codePoint;
 		return this;
 	}
@@ -196,65 +200,65 @@ public class StringBuilder implements AbstractStringBuilder {
 
 	@Deprecated
 	@Override
-	public StringBuilder replace(char target, String replacement) {
+	public StringBuilders replace(char target, String replacement) {
 		return replace(Character.toString(target), replacement);
 	}
 
 	@Deprecated
 	@Override
-	public StringBuilder replace(String target, char replacement) {
+	public StringBuilders replace(String target, char replacement) {
 		return replace(target, Character.toString(replacement));
 	}
 
 	@Override
-	public StringBuilder replace(int start, int end, char replacement) {
+	public StringBuilders replace(int start, int end, char replacement) {
 		return replace(start, end, String.valueOf(replacement));
 	}
 
 	@Override
-	public StringBuilder replace(int start, int end, String replacement) {
-		StringBuilder sb = new StringBuilder(character);
+	public StringBuilders replace(int start, int end, String replacement) {
+		StringBuilders sb = new StringBuilders(character);
 		character = sb.substring(0, start).append(replacement).append(sb.substring(end)).toString().toCharArray();
 		return this;
 	}
 
 	@Override
-	public StringBuilder replace(char target, char replacement) {
+	public StringBuilders replace(char target, char replacement) {
 		return replace(target, 0, replacement);
 	}
 
 	@Override
-	public StringBuilder replace(char target, int position, char replcement) {
+	public StringBuilders replace(char target, int position, char replcement) {
 		return replace(target, position, replcement, character.length);
 	}
 
 	@Override
-	public StringBuilder replace(char target, char replcement, int countOfReplace) {
+	public StringBuilders replace(char target, char replcement, int countOfReplace) {
 		return replace(target, 0, replcement, countOfReplace);
 	}
 
 	@Override
-	public StringBuilder replace(char target, int position, char replcement, int countOfReplace) {
+	public StringBuilders replace(char target, int position, char replcement, int countOfReplace) {
 		return replace(target, position, replcement, countOfReplace, 0, count);
 	}
 
 	@Override
-	public StringBuilder replace(char target, char replcement, int start, int end) {
+	public StringBuilders replace(char target, char replcement, int start, int end) {
 		return replace(target, 0, replcement, start, end);
 	}
 
 	@Override
-	public StringBuilder replace(char target, int position, char replcement, int start, int end) {
+	public StringBuilders replace(char target, int position, char replcement, int start, int end) {
 		return replace(target, position, replcement, character.length, start, end);
 	}
 
 	@Override
-	public StringBuilder replace(char target, char replcement, int countOfReplace, int start, int end) {
+	public StringBuilders replace(char target, char replcement, int countOfReplace, int start, int end) {
 		return replace(target, 0, replcement, countOfReplace, start, end);
 	}
 
 	@Override
-	public StringBuilder replace(char target, int position, char replcement, int countOfReplace, int start, int end) {
+	public StringBuilders replace(char target, int position, char replcement, int countOfReplace, int start, int end) {
 		int index = start;
 		while(index < end) {
 			if(character[index + offset] == target && countOfReplace != 0 && position == 0) {
@@ -265,16 +269,16 @@ public class StringBuilder implements AbstractStringBuilder {
 			}
 			++index;
 		}
-		return new StringBuilder(character);
+		return new StringBuilders(character);
 	}
 
 	@Override
-	public StringBuilder replace(String target, String replacement) {
+	public StringBuilders replace(String target, String replacement) {
 		return replaces(target, replacement, character.length);
  	}
 
 	@Override
-	public StringBuilder replace(String target, int position, String replacement) {
+	public StringBuilders replace(String target, int position, String replacement) {
 		int startIndex = indexOf(target);
 		for (; startIndex != -1; startIndex = indexOf(target, startIndex + 1)) {
 			if (position == 0) {
@@ -288,12 +292,12 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder replace(String target, String replacement, int countOfReplace) {
+	public StringBuilders replace(String target, String replacement, int countOfReplace) {
 		return replaces(target, replacement, countOfReplace);
 	}
 
 	@Override
-	public StringBuilder replace(String target, int position, String replacement, int countOfReplace) {
+	public StringBuilders replace(String target, int position, String replacement, int countOfReplace) {
 		int startIndex = indexOf(target);
 		for (; countOfReplace > -1; startIndex = indexOf(target, startIndex + 1), countOfReplace--) {
 			if (position == 0) {
@@ -307,52 +311,52 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder replace(String target, String replacement, int start, int end) {
+	public StringBuilders replace(String target, String replacement, int start, int end) {
 		return replace(target, 0, replacement, start, end);
 	}
 
 	@Override
-	public StringBuilder replace(String target, int position, String replacement, int start, int end) {
+	public StringBuilders replace(String target, int position, String replacement, int start, int end) {
 		return replace(target, position, replacement, character.length, start, end);
 	}
 
 	@Override
-	public StringBuilder replace(String target, String replacement, int countOfReplace, int start, int end) {
+	public StringBuilders replace(String target, String replacement, int countOfReplace, int start, int end) {
 		return replace(target, 0, replacement, countOfReplace, start, end);
 	}
 
 	@Override
-	public StringBuilder replace(String target, int position, String replacement, int countOfReplace, int start,
+	public StringBuilders replace(String target, int position, String replacement, int countOfReplace, int start,
 			int end) {
-		StringBuilder sb = substring(start, end);
-		StringBuilder result = new StringBuilder();
+		StringBuilders sb = substring(start, end);
+		StringBuilders result = new StringBuilders();
 		result.append(substring(0, start)).append(sb.replace(target, position, replacement, countOfReplace)).append(substring(end));
 		character = result.toCharArray();
 		return this;
 	}
 	
 	@Override
-	public StringBuilder replaceFirst(String target, String replacement) {
+	public StringBuilders replaceFirst(String target, String replacement) {
 		return replaces(target, replacement, 1);
 	}
 
 	@Override
-	public StringBuilder replaceFirst(char target, char replacement) {
+	public StringBuilders replaceFirst(char target, char replacement) {
 		return replace(target, replacement, 1);
 	}
 
 	@Override
-	public StringBuilder replaceLast(String target, String replacement) {
+	public StringBuilders replaceLast(String target, String replacement) {
 		return replace(target, concurrence(target) - 1, replacement);
 	}
 
 	@Override
-	public StringBuilder replaceLast(char target, char replacement) {
+	public StringBuilders replaceLast(char target, char replacement) {
 		return replaceLast(Character.toString(target), Character.toString(replacement));
 	}
 
 	@Override
-	public StringBuilder replaceAll(String target, String replacement) {
+	public StringBuilders replaceAll(String target, String replacement) {
 		Matcher m = Pattern.compile(target).matcher(new String(this.character));
 		StringBuffer result = new StringBuffer();
 		while (m.find()) {
@@ -364,7 +368,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder replaceAll(String target, Replacement repleces) {
+	public StringBuilders replaceAll(String target, Replacement repleces) {
 		Matcher m = Pattern.compile(target).matcher(new String(this.character));
 		StringBuffer result = new StringBuffer();
 		while (m.find()) {
@@ -386,7 +390,7 @@ public class StringBuilder implements AbstractStringBuilder {
 		return count;
 	}
 
-	private StringBuilder replaces(String target, String replacement, int countOfReplace) {
+	private StringBuilders replaces(String target, String replacement, int countOfReplace) {
 		if (target.isEmpty()) {
 			return this;
 		}
@@ -395,7 +399,7 @@ public class StringBuilder implements AbstractStringBuilder {
 		char[] targetChars = target.toCharArray();
 		char[] replacementChars = replacement.toCharArray();
 
-		StringBuilder result = new StringBuilder();
+		StringBuilders result = new StringBuilders();
 
 		int count = 0;
 		int i = 0;
@@ -430,7 +434,7 @@ public class StringBuilder implements AbstractStringBuilder {
 		return result;
  	}
 
-	private StringBuilder append(char[] chs) {
+	private StringBuilders append(char[] chs) {
 		int newCount = count + chs.length;
 		ensureCapacity(newCount);
 		java.lang.System.arraycopy(chs, 0, character, count, chs.length);
@@ -439,7 +443,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder substring(int start, int end) {
+	public StringBuilders substring(int start, int end) {
 		if (start < 0) {
 			throw new StringBuilderIndexOutOfBoundsException(start);
 		}
@@ -449,11 +453,11 @@ public class StringBuilder implements AbstractStringBuilder {
 		if (start > end) {
 			throw new StringBuilderIndexOutOfBoundsException(end - start);
 		}
-		return new StringBuilder(character, start, end - start);
+		return new StringBuilders(character, start, end - start);
 	}
 
 	@Override
-	public StringBuilder relativeSubstring(int start, int end) {
+	public StringBuilders relativeSubstring(int start, int end) {
 		if (start < 0) {
 			throw new StringBuilderIndexOutOfBoundsException(start);
 		}
@@ -467,17 +471,17 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 	
 	@Override
-	public StringBuilder substring(int start) {
+	public StringBuilders substring(int start) {
 		return substring(start, count);
 	}
 
 	@Override
-	public AbstractStringBuilder relativeSubstring(int end) {
+	public StringBuilders relativeSubstring(int end) {
 		return substring(0, end);
 	}
 
 	@Override
-	public StringBuilder substring(String s) {
+	public StringBuilders substring(String s) {
 		if(contains(s)) {
 			return substring(indexOf(s), indexOf(s) + s.length());
 		}
@@ -485,7 +489,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public AbstractStringBuilder relativeSubstring(String s) {
+	public StringBuilders relativeSubstring(String s) {
 		if (contains(s)) {
 			return substring(0, indexOf(s)).append(substring(indexOf(s) + s.length()));
 		}
@@ -493,7 +497,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder substr(int start, int length) {
+	public StringBuilders substr(int start, int length) {
 		if (start < 0) {
 			throw new StringBuilderIndexOutOfBoundsException(start);
 		}
@@ -507,12 +511,12 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public AbstractStringBuilder relativeSubstr(int start, int length) {
+	public StringBuilders relativeSubstr(int start, int length) {
 		return substring(0, start).append(substring(start + length));
 	}
 
 	@Override
-	public StringBuilder slide(int start, int end) {
+	public StringBuilders slide(int start, int end) {
 		if (start < 0 && end < 0) {
 			return substring(length() + start, length() + end);
 		}
@@ -523,23 +527,23 @@ public class StringBuilder implements AbstractStringBuilder {
 			return substring(length() + start, end);
 		}
 		if (start == end) {
-			return new StringBuilder();
+			return new StringBuilders();
 		}
 		return substring(start, end);
 	}
 
 	@Override
-	public AbstractStringBuilder relativeSlide(int start, int end) {
+	public StringBuilders relativeSlide(int start, int end) {
 		return slide(0, start).append(slide(end, count));
 	}
 
 	@Override
-	public StringBuilder reverse() {
+	public StringBuilders reverse() {
 		return reverse(0, length());
 	}
 
 	@Override
-	public StringBuilder reverse(int start, int end) {
+	public StringBuilders reverse(int start, int end) {
 		if (start < 0) {
 			throw new StringBuilderIndexOutOfBoundsException(start);
 		}
@@ -550,140 +554,140 @@ public class StringBuilder implements AbstractStringBuilder {
 		int size = end - start;
 
 		if (size == 1) {
-			return new StringBuilder(character[offset + start]);
+			return new StringBuilders(character[offset + start]);
 		}
 		if (size == 0) {
-			return new StringBuilder();
+			return new StringBuilders();
 		}
 
 		char[] retcarahc = new char[size];
 		for (int i = start; i < end; i++) {
 			retcarahc[size - i - 1] = character[offset + i];
 		}
-		return new StringBuilder(retcarahc, 0, size);
+		return new StringBuilders(retcarahc, 0, size);
 	}
 
 	@Override
-	public StringBuilder reverse(int startOrEnd, boolean isStart) {
+	public StringBuilders reverse(int startOrEnd, boolean isStart) {
 		throw new UnsupportedOperationException("Unimplemented method 'reverse'");
 	}
 
 	@Override
-	public StringBuilder reverse(AbstractStringBuilder asb) {
-		StringBuilder sb = (StringBuilder) asb;
+	public StringBuilders reverse(AbstractStringBuilder asb) {
+		StringBuilders sb = (StringBuilders) asb;
 		return reverse(0, sb.length());
 	}
 
 	@Override
-	public StringBuilder reverse(String s) {
-		StringBuilder sb = new StringBuilder(s);
+	public StringBuilders reverse(String s) {
+		StringBuilders sb = new StringBuilders(s);
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(Number n) {
-		StringBuilder sb = new StringBuilder(n.toString());
+	public StringBuilders reverse(Number n) {
+		StringBuilders sb = new StringBuilders(n.toString());
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(Byte b) {
-		StringBuilder sb = new StringBuilder(b.toString());
+	public StringBuilders reverse(Byte b) {
+		StringBuilders sb = new StringBuilders(b.toString());
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(byte b) {
-		StringBuilder sb = new StringBuilder(Byte.toString(b));
+	public StringBuilders reverse(byte b) {
+		StringBuilders sb = new StringBuilders(Byte.toString(b));
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(Short s) {
-		StringBuilder sb = new StringBuilder(s.toString());
+	public StringBuilders reverse(Short s) {
+		StringBuilders sb = new StringBuilders(s.toString());
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(short s) {
-		StringBuilder sb = new StringBuilder(Short.toString(s));
+	public StringBuilders reverse(short s) {
+		StringBuilders sb = new StringBuilders(Short.toString(s));
 		return sb.reverse();
 	}
 
 	@Override
-    public StringBuilder reverse(Integer i) {
-       StringBuilder sb = new StringBuilder(i.toString());
+    public StringBuilders reverse(Integer i) {
+       StringBuilders sb = new StringBuilders(i.toString());
 	   return sb.reverse();
     }
 
 	@Override
-    public StringBuilder reverse(int i) {
-	   StringBuilder sb = new StringBuilder(Integer.toString(i));
+    public StringBuilders reverse(int i) {
+	   StringBuilders sb = new StringBuilders(Integer.toString(i));
 	   return sb.reverse();
     }
 
 	@Override
-	public StringBuilder reverse(Long l) {
-		StringBuilder sb = new StringBuilder(l.toString());
+	public StringBuilders reverse(Long l) {
+		StringBuilders sb = new StringBuilders(l.toString());
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(long l) {
-		StringBuilder sb = new StringBuilder(Long.toString(l));
+	public StringBuilders reverse(long l) {
+		StringBuilders sb = new StringBuilders(Long.toString(l));
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(Float f) {
-		StringBuilder sb = new StringBuilder(f.toString());
+	public StringBuilders reverse(Float f) {
+		StringBuilders sb = new StringBuilders(f.toString());
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(float f) {
-		StringBuilder sb = new StringBuilder(Float.toString(f));
+	public StringBuilders reverse(float f) {
+		StringBuilders sb = new StringBuilders(Float.toString(f));
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(Double d) {
-		StringBuilder sb = new StringBuilder(d.toString());
+	public StringBuilders reverse(Double d) {
+		StringBuilders sb = new StringBuilders(d.toString());
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(double d) {
-		StringBuilder sb = new StringBuilder(Double.toString(d));
+	public StringBuilders reverse(double d) {
+		StringBuilders sb = new StringBuilders(Double.toString(d));
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(Character c) {
-		StringBuilder sb = new StringBuilder(c.toString());
+	public StringBuilders reverse(Character c) {
+		StringBuilders sb = new StringBuilders(c.toString());
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(char c) {
-		StringBuilder sb = new StringBuilder(Character.toString(c));
+	public StringBuilders reverse(char c) {
+		StringBuilders sb = new StringBuilders(Character.toString(c));
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(Boolean b) {
-		StringBuilder sb = new StringBuilder(b.toString());
+	public StringBuilders reverse(Boolean b) {
+		StringBuilders sb = new StringBuilders(b.toString());
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder reverse(boolean b) {
-		StringBuilder sb = new StringBuilder(Boolean.toString(b));
+	public StringBuilders reverse(boolean b) {
+		StringBuilders sb = new StringBuilders(Boolean.toString(b));
 		return sb.reverse();
 	}
 
 	@Override
-	public StringBuilder padStart(int length, char padChar) {
+	public StringBuilders padStart(int length, char padChar) {
 		if (length < 0) {
 			throw new StringBuilderIndexOutOfBoundsException(length);
 		}
@@ -697,11 +701,11 @@ public class StringBuilder implements AbstractStringBuilder {
 		for (int i = length, j = 0; i < count; i++, j++) {
 			newCharacter[i] = character[offset + j];
 		}
-		return new StringBuilder(newCharacter, offset, count + length);
+		return new StringBuilders(newCharacter, offset, count + length);
 	}
 
 	@Override
-	public StringBuilder padEnd(int length, char padChar) {
+	public StringBuilders padEnd(int length, char padChar) {
 		if (length < 0) {
 			throw new StringIndexOutOfBoundsException(length);
 		}
@@ -715,21 +719,24 @@ public class StringBuilder implements AbstractStringBuilder {
 		for (int i = count; i < count + length; i++) {
 			newCharacter[i] = padChar;
 		}
-		return new StringBuilder(newCharacter, offset, count + length);
+		return new StringBuilders(newCharacter, offset, count + length);
 	}
 
 	@Override
-	public StringBuilder append(Character c) {
+	public StringBuilders append(Character c) {
 		return append(c.toString());
 	}
 
 	@Override
-	public StringBuilder append(CharSequence cs) {
+	public StringBuilders append(CharSequence cs) {
 		return append(cs.toString());
 	}
 
 	@Override
-	public StringBuilder append(String s) {
+	public StringBuilders append(String s) {
+		if (s == null) {
+			s = "null";
+		}
 		ensureCapacity(count + s.length());
 		for (int i = 0; i < s.length(); i++) {
 			character[offset + count + i] = s.charAt(i);
@@ -739,27 +746,27 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder append(Object o) {
+	public StringBuilders append(Object o) {
 		return append(o.toString());
 	}
 
 	@Override
-	public StringBuilder append(Number n) {
+	public StringBuilders append(Number n) {
 		return append(n.toString());
 	}
 
 	@Override
-	public StringBuilder append(Boolean b) {
+	public StringBuilders append(Boolean b) {
 		return append(b.toString());
 	}
 
 	@Override
-	public StringBuilder append(AbstractStringBuilder asb) {
+	public StringBuilders append(AbstractStringBuilder asb) {
 		return append(asb.toString());
 	}
 
 	@Override
-	public StringBuilder appendCodePoint(int codePoint) {
+	public StringBuilders appendCodePoint(int codePoint) {
 		ensureCapacity(count + 1);
 		character[count + 1] = (char) codePoint;
 		count += 1;
@@ -767,7 +774,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder appendCodePoint(int... codePoints) {
+	public StringBuilders appendCodePoint(int... codePoints) {
 		for (int codePoint : codePoints) {
 			appendCodePoint(codePoint);
 		}
@@ -775,79 +782,79 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public AbstractStringBuilder appendFirst(Character c) {
-		StringBuilder sb = new StringBuilder(c.toString());
+	public StringBuilders appendFirst(Character c) {
+		StringBuilders sb = new StringBuilders(c.toString());
 		sb.append(this.character);
 		this.character = sb.toCharArray();
 		return this;
 	}
 
 	@Override
-	public AbstractStringBuilder appendFirst(String s) {
-		StringBuilder sb = new StringBuilder(s);
+	public StringBuilders appendFirst(String s) {
+		StringBuilders sb = new StringBuilders(s);
 		sb.append(this.character);
 		this.character = sb.toCharArray();
 		return this;
 	}
 
 	@Override
-	public StringBuilder insert(int index, Character character) {
-		StringBuilder sb = new StringBuilder(this.character);
+	public StringBuilders insert(int index, Character character) {
+		StringBuilders sb = new StringBuilders(this.character);
 		sb = sb.substring(0, index).append(character).append(sb.substring(index));
 		this.character = sb.toString().toCharArray();
 		return this;
 	}
 
 	@Override
-	public StringBuilder insert(int index, CharSequence cs) {
-		StringBuilder sb = new StringBuilder(this.character);
+	public StringBuilders insert(int index, CharSequence cs) {
+		StringBuilders sb = new StringBuilders(this.character);
 		sb = sb.substring(0, index).append(cs).append(sb.substring(index));
 		this.character = sb.toString().toCharArray();
 		return this;
 	}
 
 	@Override
-	public StringBuilder insert(int index, String s) {
-		StringBuilder sb = new StringBuilder(this.character);
+	public StringBuilders insert(int index, String s) {
+		StringBuilders sb = new StringBuilders(this.character);
 		sb = sb.substring(0, index).append(s).append(sb.substring(index));
 		this.character = sb.toString().toCharArray();
 		return this;
 	}
 
 	@Override
-	public StringBuilder insert(int index, Object o) {
-		StringBuilder sb = new StringBuilder(this.character);
+	public StringBuilders insert(int index, Object o) {
+		StringBuilders sb = new StringBuilders(this.character);
 		sb = sb.substring(0, index).append(o).append(sb.substring(index));
 		this.character = sb.toString().toCharArray();
 		return this;
 	}
 
 	@Override
-	public StringBuilder insert(int index, Number n) {
-		StringBuilder sb = new StringBuilder(this.character);
+	public StringBuilders insert(int index, Number n) {
+		StringBuilders sb = new StringBuilders(this.character);
 		sb = sb.substring(0, index).append(n).append(sb.substring(index));
 		this.character = sb.toString().toCharArray();
 		return this;
 	}
 
 	@Override
-	public StringBuilder insert(int index, Boolean b) {
-		StringBuilder sb = new StringBuilder(this.character);
+	public StringBuilders insert(int index, Boolean b) {
+		StringBuilders sb = new StringBuilders(this.character);
 		sb = sb.substring(0, index).append(b).append(sb.substring(index));
 		this.character = sb.toString().toCharArray();
 		return this;
 	}
 
 	@Override
-	public StringBuilder delete(int start, int end) {
-		StringBuilder sb = new StringBuilder(this.character);
+	public StringBuilders delete(int start, int end) {
+		StringBuilders sb = new StringBuilders(this.character);
 		sb = sb.substring(0, start).append(sb.substring(end));
 		this.character = sb.toCharArray();
 		return this;
 	}
 
 	@Override
-	public StringBuilder delete(int index) {
+	public StringBuilders delete(int index) {
 		if ((index < 0) || (index >= count)) {
 			throw new StringBuilderIndexOutOfBoundsException(index);
 		}
@@ -864,7 +871,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder deletes(int... characters) {
+	public StringBuilders deletes(int... characters) {
 		int fix = 0;
 		for (int character : characters) {
 			if (fix == 1) { delete(character - 2); }
@@ -875,37 +882,37 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder deletesAll(char characters) {
+	public StringBuilders deletesAll(char characters) {
 		return replace(String.valueOf(characters), "");
 	}
 
 	@Override
-	public StringBuilder deleteFirst() {
+	public StringBuilders deleteFirst() {
 		return delete(0, 1);
 	}
 
 	@Override
-	public StringBuilder deleteFirst(char characters) {
+	public StringBuilders deleteFirst(char characters) {
 		return replaceFirst(String.valueOf(characters), "");
 	}
 
 	@Override
-	public StringBuilder deleteLast() {
+	public StringBuilders deleteLast() {
 		return delete(length() - 1, length());
 	}
 
 	@Override
-	public StringBuilder deleteLast(char characters) {
+	public StringBuilders deleteLast(char characters) {
 		return replaceLast(String.valueOf(characters), "");
 	}
 
 	@Override
-	public StringBuilder toUpperCase() {
+	public StringBuilders toUpperCase() {
 		return toUpperCase(0, length());
 	}
 
 	@Override
-	public StringBuilder toUpperCase(int start, int end) {
+	public StringBuilders toUpperCase(int start, int end) {
 		int position = start;
 		while (position < end) {
 			if (getCharAt(offset + position) >= 'a' && getCharAt(offset + position) <= 'z') {
@@ -913,16 +920,16 @@ public class StringBuilder implements AbstractStringBuilder {
 			}
 			position++;
 		}
-		return new StringBuilder(character);
+		return new StringBuilders(character);
 	}
 
 	@Override
-	public StringBuilder toLowerCase() {
+	public StringBuilders toLowerCase() {
 		return toLowerCase(0, length());
 	}
 
 	@Override
-	public StringBuilder toLowerCase(int start, int end) {
+	public StringBuilders toLowerCase(int start, int end) {
 		int position = start;
 		while ((position) < end) {
 			if (getCharAt(offset + position) >= 'A' && getCharAt(offset + position) <= 'Z') {
@@ -930,25 +937,25 @@ public class StringBuilder implements AbstractStringBuilder {
 			}
 			position++;
 		}
-		return new StringBuilder(character);
+		return new StringBuilders(character);
 	}
 
 	@Override
-	public StringBuilder trimStart() {
+	public StringBuilders trimStart() {
 		int position = 0;
 		while (getCharAt(++position) == ' ') {}
 		return substring(position, length());
 	}
 
 	@Override
-	public StringBuilder trimEnd() {
+	public StringBuilders trimEnd() {
 		int position = size();
 		while (getCharAt(--position) == ' ') {}
 		return substring(0, position + 1);
 	}
 
 	@Override
-	public StringBuilder trim() {
+	public StringBuilders trim() {
 		int start = 0;
 		int end = size();
 		while (getCharAt(++start) == ' ') {}
@@ -957,9 +964,9 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder join(String begin, String prefix, String delimiter, String suffix,
+	public StringBuilders join(String begin, String prefix, String delimiter, String suffix,
 			String end, int length, Object[] objects) {
-		StringBuilder sb = new StringBuilder(begin);
+		StringBuilders sb = new StringBuilders(begin);
 		for (int i = 0; i < length; i++) {
 			sb = sb.append(prefix).append(objects[i]).append(suffix).append(delimiter);
 		}
@@ -970,39 +977,39 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder join(String begin, String prefix, String delimiter, String suffix,
+	public StringBuilders join(String begin, String prefix, String delimiter, String suffix,
 			String end, Object[] objects) {
 		return join(begin, prefix, delimiter, suffix, end, objects.length, objects);
 	}
 
 	@Override
-	public StringBuilder join(String prefix, String delimiter, String suffix, int length, Object[] objects) {
+	public StringBuilders join(String prefix, String delimiter, String suffix, int length, Object[] objects) {
 		return join("", prefix, delimiter, suffix, "", length, objects);
 	}
 
 	@Override
-	public StringBuilder join(String prefix, String delimiter, String suffix, Object[] objects) {
+	public StringBuilders join(String prefix, String delimiter, String suffix, Object[] objects) {
 		return join("", prefix, delimiter, suffix, "", objects.length, objects);
 	}
 
 	@Override
-	public StringBuilder join(String delimiter, int length, Object[] objects) {
+	public StringBuilders join(String delimiter, int length, Object[] objects) {
 		return join("", "", delimiter, "", "", length, objects);
 	}
 
 	@Override
-	public StringBuilder join(String delimiter, Object[] objects) {
+	public StringBuilders join(String delimiter, Object[] objects) {
 		return join("", "", delimiter, "", "", objects.length, objects);
 	}
 
 	@Override
-	public StringBuilder[] split(String delimiter, int limit) {
+	public StringBuilders[] split(String delimiter, int limit) {
         if (character == null || delimiter == null || limit < 1) {
             throw new IllegalArgumentException("Invalid input");
         }
-		StringBuilder sb = new StringBuilder(character);
+		StringBuilders sb = new StringBuilders(character);
 
-		StringBuilder[] result = new StringBuilder[limit];
+		StringBuilders[] result = new StringBuilders[limit];
         int count = 0;
         int start = 0;
         int end;
@@ -1018,7 +1025,7 @@ public class StringBuilder implements AbstractStringBuilder {
         result[count] = sb.substring(start);
 
         if (count < limit - 1) {
-            StringBuilder[] trimmedResult = new StringBuilder[count + 1];
+            StringBuilders[] trimmedResult = new StringBuilders[count + 1];
             java.lang.System.arraycopy(result, 0, trimmedResult, 0, count + 1);
             return trimmedResult;
         }
@@ -1026,19 +1033,19 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	// @Override
-	public StringBuilder[] split(char delimiter) {
+	public StringBuilders[] split(char delimiter) {
 		return split(Character.toString(delimiter), 0);
 	}
 
 	@Override
-	public StringBuilder[] split(int index) {
+	public StringBuilders[] split(int index) {
 		return split(index, 0);
 	}
 
 	@Override
-	public StringBuilder[] split(int index, int limit) {
+	public StringBuilders[] split(int index, int limit) {
 		int missing = length() % index;
-		StringBuilder[] result = new StringBuilder[limit == 0 ? (missing != 0 ? (length() / index) + 1 : length() / index) : limit];
+		StringBuilders[] result = new StringBuilders[limit == 0 ? (missing != 0 ? (length() / index) + 1 : length() / index) : limit];
 		for (int i = 0; i < result.length; i++) {
 			int j = (i + 1) * index;
 			result[i] = substring(i * index, j < length() ? j : length());
@@ -1047,7 +1054,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder swap(int index, int toIndex) {
+	public StringBuilders swap(int index, int toIndex) {
 		if ((index < 0) || (index >= count)) {
 			throw new StringBuilderIndexOutOfBoundsException(index);
 		}
@@ -1061,7 +1068,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public AbstractStringBuilder swaps(int[] index, int[] toIndex) {
+	public StringBuilders swaps(int[] index, int[] toIndex) {
 		if ((index == null) || (toIndex == null)) {
 			throw new NullPointerException();
 		}
@@ -1075,7 +1082,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	}
 
 	@Override
-	public StringBuilder swaps(int... indexToIndex) {
+	public StringBuilders swaps(int... indexToIndex) {
 		if ((indexToIndex == null) || (indexToIndex.length <= 0)) {
 			throw new IllegalArgumentException();
 		}
@@ -1161,6 +1168,7 @@ public class StringBuilder implements AbstractStringBuilder {
 		return toLowerCase().endsWith(s.toLowerCase(), toffset);
 	}
 
+	@Override
 	public boolean endsWith(String s) {
 		return endsWith(s, 0);
 	}
@@ -1175,14 +1183,14 @@ public class StringBuilder implements AbstractStringBuilder {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof StringBuilder)) {
+		if (!(obj instanceof StringBuilders)) {
 			return false;
 		}
 		String s = (String) obj;
 		if (s.length() != length()) {
 			return false;
 		}
-		StringBuilder otherStringBuilder = (StringBuilder) obj;
+		StringBuilders otherStringBuilder = (StringBuilders) obj;
 		if (size() != otherStringBuilder.length()) { return false; }
 		for (int i = 0; i < otherStringBuilder.length(); i++) {
 			if (getCharAt(i) != otherStringBuilder.getCharAt(i)) {
@@ -1197,10 +1205,10 @@ public class StringBuilder implements AbstractStringBuilder {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof StringBuilder)) {
+		if (!(obj instanceof StringBuilders)) {
 			return false;
 		}
-		StringBuilder otherStringBuilder = (StringBuilder) obj;
+		StringBuilders otherStringBuilder = (StringBuilders) obj;
 	
 		if (size() != otherStringBuilder.length()) { return false; }
 		for (int i = 0; i < otherStringBuilder.length(); i++) {
@@ -1295,7 +1303,6 @@ public class StringBuilder implements AbstractStringBuilder {
 		for (int i = 0; i < length(); i++) {
 			if (getCharAt(i) == ' ' || getCharAt(i) == '\t' || getCharAt(i) == '\r' || getCharAt(i) == '\n') {
 				b = true;
-				continue;
 			} else if (getCharAt(i) != ' ') {
 				b = false;
 				break;
@@ -1502,7 +1509,7 @@ public class StringBuilder implements AbstractStringBuilder {
 
 	@Override
 	public int[] indexOfAll(String target) {
-		ArrayList<Integer> list = new ArrayList<Integer>();
+		ArrayList<Integer> list = new ArrayList<>();
 		for (int i = 0; i != -1; i = indexOf(target, i + target.length())) {
 			list.add(i);
 		}
@@ -1517,7 +1524,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	@Override
 	public int[] indexOfAll(char target) {
 		String text = new String(character);
-		ArrayList<Integer> list = new ArrayList<Integer>();
+		ArrayList<Integer> list = new ArrayList<>();
 		for (int i = 0; i < text.length(); i++) {
 			if ((text.charAt(i) == target)) {
 				list.add(i);
@@ -1532,7 +1539,7 @@ public class StringBuilder implements AbstractStringBuilder {
 
 	@Override
 	public int[] relativeIndeOfAll(String target) {
-		ArrayList<Integer> list = new ArrayList<Integer>();
+		ArrayList<Integer> list = new ArrayList<>();
 		for (int i = 0; i != -1; i = indexOf(target, i + target.length())) {
 			list.add(i + target.length());
 		}
@@ -1547,7 +1554,7 @@ public class StringBuilder implements AbstractStringBuilder {
 	@Override
 	public int[] relativeIndeOfAll(char target) {
 		String text = new String(character);
-		ArrayList<Integer> list = new ArrayList<Integer>();
+		ArrayList<Integer> list = new ArrayList<>();
 		for (int i = 0; i < text.length(); i++) {
 			if ((text.charAt(i) == target)) {
 				list.add(i + 1);

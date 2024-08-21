@@ -1,6 +1,6 @@
 package com.java.components.util.range;
 
-import com.java.components.lang.IndexOutOfBoundsException;
+import com.java.components.lang.exception.IndexOutOfBoundsException;
 
 public class RangeIndexOfBoundsException extends IndexOutOfBoundsException {
 	public RangeIndexOfBoundsException() {

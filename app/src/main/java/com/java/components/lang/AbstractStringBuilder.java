@@ -8,7 +8,7 @@ public interface AbstractStringBuilder {
 	/**
 	 * <h1> Documentacion </h1>
 	 * El metodo `setCharAt(int, char)` es el encargado de cambiar un carácter a otro caracter por el <strong>segundo parámetro</strong>,
-	 * por medio de las posiciones dados, en el <storng>primer parámetro</storng>.
+	 * por medio de las posiciones dados, en el <strong>primer parámetro</strong>.
 	 * Y...
 	 * <h2> ¿Como usarlo? </h2>
 	 * Para usar, es solo llamar la instancia de la clase, con un texto que se quieres ingresar, ejemplo:
@@ -83,7 +83,7 @@ public interface AbstractStringBuilder {
 	public AbstractStringBuilder replaceLast(String target, String replacement);
 	public AbstractStringBuilder replaceLast(char target, char replacement);
 	public AbstractStringBuilder replaceAll(String targetRegex, String replacementRegex);
-	public AbstractStringBuilder replaceAll(String targetRegex, StringBuilder.Replacement replacementRegex);
+	public AbstractStringBuilder replaceAll(String targetRegex, StringBuilders.Replacement replacementRegex);
 
 	public AbstractStringBuilder substring(int start, int end);
 	public AbstractStringBuilder relativeSubstring(int start, int end);
@@ -347,6 +347,7 @@ public interface AbstractStringBuilder {
 	public char getFirstChar();
 	public char getLastChar();
 
+	@Override
 	public String toString();
 	public String toString(int min, int max);
 	public String toString(AbstractStringBuilder asb);

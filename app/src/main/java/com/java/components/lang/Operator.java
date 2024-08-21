@@ -1,13 +1,17 @@
 package com.java.components.lang;
 
 public class Operator {
-	public static boolean equalsAll(Object equalTo, Object... args) {
+	public static <T> boolean equals(T equalTo, @SuppressWarnings("unchecked") T... args) {
 		for (Object object : args) {
 			if(!equalTo.equals(object)) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	public static <T> boolean equal(T equalTo, T arg) {
+		return equalTo.equals(arg);
 	}
 
 	public static int squareRoot(int number) {

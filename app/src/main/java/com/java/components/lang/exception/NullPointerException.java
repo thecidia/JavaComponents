@@ -1,4 +1,6 @@
-package com.java.components.lang;
+package com.java.components.lang.exception;
+
+import com.java.components.lang.CompilerTaskException;
 
 public class NullPointerException extends CompilerTaskException {
 	public NullPointerException() {

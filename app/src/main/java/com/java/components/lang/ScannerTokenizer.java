@@ -14,7 +14,7 @@ public class ScannerTokenizer {
 	}
 
 	private ScannerTokenizer(String text, String delimiter) {
-		StringBuilder delimiterBuilder = new StringBuilder();
+		StringBuilders delimiterBuilder = new StringBuilders();
 		if (delimiter.length() > 0) {
 			for (int i = 0; i < delimiter.length(); i++) {
 				if (!(delimiter.charAt(i) == '\n' && delimiter.charAt(i) == '\r')) {
@@ -47,7 +47,7 @@ public class ScannerTokenizer {
 		if(currentPositionLine >= tokens.length) {
 			return null;
 		}
-		StringBuilder token = new StringBuilder();
+		StringBuilders token = new StringBuilders();
 		while (currentPositionToken < tokens[currentPositionLine].length) {
 			token.append(tokens[currentPositionLine][currentPositionToken]);
 			currentPositionToken++;

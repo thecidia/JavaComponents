@@ -1,6 +1,6 @@
 package com.java.components.lang;
 
-public class Boolean {
+public class Boolean extends Object {
 	public static final Boolean TRUE = new Boolean(true);
 	public static final Boolean FALSE = new Boolean(false);
 	public static final Boolean NULL = null;
@@ -75,8 +75,7 @@ public class Boolean {
 	}
 
 	public static boolean FalseOrTrue(boolean bool, boolean bool2) {
-		if(equalsOrNotEquals(bool2, bool)) return true;
-		return false;
+		return equalsOrNotEquals(bool2, bool);
 	}
 
 	public static boolean andAll(boolean... conditions) {
@@ -126,4 +125,43 @@ public class Boolean {
 	}
 
 	public boolean getBoolean() { return this.value; }
+
+	public void setBoolean(boolean bool) {
+		this.value = bool;
+	}
+
+	public <T> boolean equals(@SuppressWarnings("unchecked") T... objs) {
+		switch (objs) {
+			case Boolean[] booleanArray -> {
+				return Operator.equals(this, booleanArray);
+			}
+			case java.lang.Boolean[] boolean1 -> {
+				return Operator.equals(this.getBoolean(), boolean1);
+			}
+			default -> {
+			}
+		}
+		return false;
+	}
+
+	@Override
+	@Deprecated(since = "Use the method/function 'equal(<T>)'")
+	public final boolean equals(@SuppressWarnings("") Object obj) {
+		return this.equal(obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	public <T> boolean equal(T obj) {
+		if (obj == null || this == null) {
+			return true;
+		}
+		if (obj instanceof Boolean boolean1) {
+			return boolean1.getBoolean() == getBoolean();
+		}
+		return false;
+	}
 }

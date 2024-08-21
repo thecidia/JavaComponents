@@ -29,7 +29,7 @@ public class Strings {
 	public String append(String str, int index) { return text.substring(0, index) + str + text.substring(index, text.length()); }
 
 	public String appends(int index, String... strs) {
-		StringBuilder sb = new StringBuilder();
+		StringBuilders sb = new StringBuilders();
 		sb.append(text.substring(0, index));
 		for (String s : strs) sb.append(s);
 		sb.append(text.substring(index, text.length()));
@@ -48,25 +48,25 @@ public class Strings {
 	}
 
 	public String padStart(String text) {
-		StringBuilder stringBuilder = new StringBuilder(text);
+		StringBuilders stringBuilder = new StringBuilders(text);
 		stringBuilder.append(this.text);
 		return stringBuilder.toString();
 	}
 
 	public String padEnd(String text) {
-		StringBuilder stringBuilder = new StringBuilder(this.text);
+		StringBuilders stringBuilder = new StringBuilders(this.text);
 		stringBuilder.append(text);
 		return stringBuilder.toString();
 	}
 
 	public String repeat(int count) {
-		StringBuilder stringBuilder = new StringBuilder(this.text);
+		StringBuilders stringBuilder = new StringBuilders(this.text);
 		for (int i = 0; i < count; i++) stringBuilder.append(this.text);
 		return stringBuilder.toString();
 	}
 
 	public String repeat(String text, int count) {
-		StringBuilder stringBuilder = new StringBuilder(this.text);
+		StringBuilders stringBuilder = new StringBuilders(this.text);
 		for (int i = 0; i < count; i++) stringBuilder.append(text);
 		return stringBuilder.toString();
 	}
@@ -130,7 +130,7 @@ public class Strings {
 	public String replaceSuffix(int end, String replacement) { return replace(shortLength(end), text.length(), replacement); }
 
 	String escapeToNormal(String escapeText) {
-		StringBuilder builder = new StringBuilder();
+		StringBuilders builder = new StringBuilders();
 		for(int i = 0; i < escapeText.length(); i++) {
 			switch (escapeText.charAt(i)) {
 				case '?': { builder.append("\\" + escapeText.charAt(i)); break; }
@@ -196,7 +196,7 @@ public class Strings {
 			position--;
 		}
 		if(startIndex == -1) return text;
-		StringBuilder stringBuilder = new StringBuilder(text);
+		StringBuilders stringBuilder = new StringBuilders(text);
 		stringBuilder.replace(startIndex, startIndex + target.length(), replacement);
 		return stringBuilder.toString();
 	}
@@ -338,7 +338,7 @@ public class Strings {
 	public static String join(CharSequence prefix, CharSequence suffix, CharSequence delimiter, int limit, CharSequence... args) { return join(prefix, suffix, delimiter, -1, limit + 1, args); }
 
 	public static String join(CharSequence prefix, CharSequence suffix, CharSequence delimiter, int limitLengthCharSequence, int limit, CharSequence... args) {
-		StringBuilder parts = new StringBuilder();
+		StringBuilders parts = new StringBuilders();
 		limit = limit == 0 ? args.length : limit;
 		for(int i = 0; i < limit; i++) if(limitLengthCharSequence == args[i].length() || limitLengthCharSequence == -1) parts.append(((String) prefix) + ((String) args[i]) + ((String) suffix) + ((String) delimiter));
 		if(parts.length() > 2) parts.delete(parts.length() - 1, parts.length());
@@ -365,12 +365,12 @@ public class Strings {
 
 	public static boolean isNull(String str) { return str == null; }
 
-	public String reverse() { return new StringBuilder(text).reverse().toString(); }
+	public String reverse() { return new StringBuilders(text).reverse().toString(); }
 
-	public static String reverse(String str) { return new StringBuilder(str).reverse().toString(); }
+	public static String reverse(String str) { return new StringBuilders(str).reverse().toString(); }
 
 	public String difference(String other) {
-		StringBuilder diff = new StringBuilder();
+		StringBuilders diff = new StringBuilders();
 		for(int i = 0; i < Math.min(text.length(), other.length()); i++) if(text.charAt(i) != other.charAt(i)) diff.append(text.charAt(i) + " != " + other.charAt(i) + ", index: " + i + "\n");
 		if(other.length() > text.length()) diff.append(other.substring(text.length()));
 		return diff.toString();
@@ -394,7 +394,7 @@ public class Strings {
 
 	public String skip(String delimiter) {
 		String text = this.text;
-		StringBuilder builder = new StringBuilder();
+		StringBuilders builder = new StringBuilders();
 		for (int i = 0; i < delimiter.length(); i++) {
 			switch (delimiter.charAt(i)) {
 				case '?': { builder.append("\\" + delimiter.charAt(i) + "|"); break; }
